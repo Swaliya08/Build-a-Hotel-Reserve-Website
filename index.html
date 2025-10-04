@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savory Haven | Gourmet Dining Experience</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Home Page CSS */
+        :root {
+            --primary: #e63946;
+            --secondary: #caefbdff;
+            --dark: #1d3557;
+            --light: #a8dadc;
+            --accent: #74beecff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        header {
+            background-color: var(--dark);
+            color: var(--secondary);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(29, 53, 87, 0.7), rgba(29, 53, 87, 0.7)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 5%;
+        }
+        
+        .hero h2 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeIn 1.5s ease;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+            animation: fadeIn 2s ease;
+        }
+        
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            animation: fadeIn 2.5s ease;
+        }
+        
+        .btn:hover {
+            background-color: #fca64fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .promo-banner {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin: 3rem 5%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: skewY(-2deg);
+        }
+        
+        .promo-banner-content {
+            transform: skewY(2deg);
+        }
+        
+        .promo-banner h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .promo-banner p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .features {
+            padding: 5rem 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .feature-card i {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: var(--secondary);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-icons a {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .logo {
+                margin-bottom: 1rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+            
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="https://img.icons8.com/color/96/000000/restaurant.png" alt="Savory Haven Logo">
+            <h1>Swaliya's Restaurant</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="booking.html">Reservations</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <h2>Luxurious accommodation experience to the guest.</h2>
+        <p>Discover a world of flavors crafted by our award-winning chefs using the finest locally-sourced ingredients</p>
+        <a href="booking.html" class="btn">Reserve Your Table</a>
+    </section>
+    
+    <section class="promo-banner">
+        <div class="promo-banner-content">
+            <h3>SPECIAL OFFER: 20% OFF</h3>
+            <p>Enjoy 15% off your total bill when you dine with us on weekdays from 10PM-2AM</p>
+            <a href="booking.html" class="btn">Book Now</a>
+        </div>
+    </section>
+    
+    <section class="features">
+        <div class="feature-card">
+            <i class="fas fa-utensils"></i>
+            <h3>Gourmet Cuisine</h3>
+            <p>Our menu features innovative dishes that blend traditional techniques with modern flair</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-wine-glass-alt"></i>
+            <h3>Premium Bar</h3>
+            <p>Extensive selection of fine wines, craft cocktails, and artisanal spirits</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-heart"></i>
+            <h3>Sustainable Dining</h3>
+            <p>Committed to sustainability with locally-sourced, seasonal ingredients</p>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+        
+        <p>123 Gourmet Street, Foodville | (555) 123-4567 | info@savoryhaven.com</p>
+    </footer>
+</body>
+</html>

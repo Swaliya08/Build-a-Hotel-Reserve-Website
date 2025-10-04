@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu | Savory Haven</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Menu Page CSS */
+        :root {
+            --primary: #e63946;
+            --secondary: #f1faee;
+            --dark: #1d3557;
+            --light: #a8dadc;
+            --accent: #457b9d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+        
+        header {
+            background-color: var(--dark);
+            color: var(--secondary);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .menu-hero {
+            height: 50vh;
+            background: linear-gradient(rgba(29, 53, 87, 0.7), rgba(29, 53, 87, 0.7)), url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding-top: 80px;
+        }
+        
+        .menu-hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .menu-container {
+            padding: 5rem 5%;
+        }
+        
+        .menu-categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .category-btn {
+            background: none;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn.active, .category-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .menu-item {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            display: flex;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .menu-item-img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+        
+        .menu-item-content {
+            padding: 1.5rem;
+            flex: 1;
+        }
+        
+        .menu-item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .menu-item-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .menu-item-price {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .menu-item-desc {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .menu-item-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            background-color: var(--light);
+            color: var(--dark);
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+        
+        .tag.vegetarian {
+            background-color: #a7c957;
+            color: white;
+        }
+        
+        .tag.spicy {
+            background-color: #e63946;
+            color: white;
+        }
+        
+        .tag.gluten-free {
+            background-color: #457b9d;
+            color: white;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: var(--secondary);
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-icons a {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .logo {
+                margin-bottom: 1rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+            
+            .menu-hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .menu-item {
+                flex-direction: column;
+            }
+            
+            .menu-item-img {
+                width: 100%;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="https://img.icons8.com/color/96/000000/restaurant.png" alt="Savory Haven Logo">
+            <h1>Swalias's Restaurant</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="booking.html">Reservations</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="menu-hero">
+        <h2>Our Culinary Creations</h2>
+        <p>Each dish tells a story of passion, tradition, and innovation</p>
+    </section>
+    
+    <section class="menu-container">
+        <div class="menu-categories">
+            <button class="category-btn active" data-category="all">All</button>
+            <button class="category-btn" data-category="starters">Starters</button>
+            <button class="category-btn" data-category="mains">Mains</button>
+            <button class="category-btn" data-category="desserts">Desserts</button>
+            <button class="category-btn" data-category="drinks">Drinks</button>
+        </div>
+        
+        <div class="menu-grid" id="menuGrid">
+            <!-- Item 1 - Starter -->
+            <div class="menu-item" data-category="starters">
+                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="Truffle Pasta" class="menu-item-img">
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3 class="menu-item-title">Truffle Infused Pasta</h3>
+                        <span class="menu-item-price">$24</span>
+                    </div>
+                    <p class="menu-item-desc">Handmade pasta with wild mushrooms, black truffle cream sauce, and aged parmesan</p>
+                    <div class="menu-item-tags">
+                        <span class="tag vegetarian">Vegetarian</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Item 2 - Main -->
+            <div class="menu-item" data-category="mains">
+                <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1398&q=80" alt="Ribeye Steak" class="menu-item-img">
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3 class="menu-item-title">Aged Ribeye Steak</h3>
+                        <span class="menu-item-price">$38</span>
+                    </div>
+                    <p class="menu-item-desc">28-day dry-aged ribeye with roasted garlic butter, truffle fries, and seasonal vegetables</p>
+                    <div class="menu-item-tags">
+                        <span class="tag spicy">Chef's Special</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Item 3 - Main -->
+            <div class="menu-item" data-category="mains">
+                <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Seafood Platter" class="menu-item-img">
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3 class="menu-item-title">Ocean's Bounty Platter</h3>
+                        <span class="menu-item-price">$42</span>
+                    </div>
+                    <p class="menu-item-desc">Fresh lobster, scallops, shrimp, and mussels with lemon butter sauce and saffron rice</p>
+                    <div class="menu-item-tags">
+                        <span class="tag gluten-free">Gluten Free</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Item 4 - Starter -->
+            <div class="menu-item" data-category="starters">
+                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Salad" class="menu-item-img">
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3 class="menu-item-title">Harvest Salad</h3>
+                        <span class="menu-item-price">$16</span>
+                    </div>
+                    <p class="menu-item-desc">Mixed greens with roasted beets, goat cheese, candied walnuts, and balsamic glaze</p>
+                    <div class="menu-item-tags">
+                        <span class="tag vegetarian">Vegetarian</span>
+                        <span class="tag gluten-free">Gluten Free</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Item 5 - Dessert -->
+            <div class="menu-item" data-category="desserts">
+                <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1527&q=80" alt="Dessert" class="menu-item-img">
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3 class="menu-item-title">Chocolate Symphony</h3>
+                        <span class="menu-item-price">$12</span>
+                    </div>
+                    <p class="menu-item-desc">Layers of dark chocolate mousse, flourless cake, and raspberry coulis</p>
+                    <div class="menu-item-tags">
+                        <span class="tag gluten-free">Gluten Free</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Item 6 - Main -->
+            <div class="menu-item" data-category="mains">
+                <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Burger" class="menu-item-img">
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3 class="menu-item-title">Gourmet Truffle Burger</h3>
+                        <span class="menu-item-price">$18</span>
+                    </div>
+                    <p class="menu-item-desc">Wagyu beef patty with truffle aioli, brie cheese, caramelized onions, and brioche bun</p>
+                    <div class="menu-item-tags">
+                        <span class="tag spicy">Spicy Option</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Item 7 - Main -->
+            <div class="menu-item" data-category="mains">
+                <img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Pizza" class="menu-item-img">
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3 class="menu-item-title">Artisan Wood-Fired Pizza</h3>
+                        <span class="menu-item-price">$20</span>
+                    </div>
+                    <p class="menu-item-desc">San Marzano tomato sauce, fresh mozzarella, basil, and imported prosciutto</p>
+                    <div class="menu-item-tags">
+                        <span class="tag vegetarian">Vegetarian Option</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Item 8 - Drink -->
+            <div class="menu-item" data-category="drinks">
+                <img src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Cocktail" class="menu-item-img">
+                <div class="menu-item-content">
+                    <div class="menu-item-header">
+                        <h3 class="menu-item-title">Signature Lavender Mule</h3>
+                        <span class="menu-item-price">$14</span>
+                    </div>
+                    <p class="menu-item-desc">House-infused lavender vodka, ginger beer, lime, and edible flowers</p>
+                    <div class="menu-item-tags">
+                        <span class="tag">Seasonal</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+        
+        <p>123 Gourmet Street, Foodville | (555) 123-4567 | info@savoryhaven.com</p>
+    </footer>
+    
+    <script>
+        // Category filtering functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            const menuItems = document.querySelectorAll('.menu-item');
+            
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    const category = button.getAttribute('data-category');
+                    
+                    // Filter menu items
+                    menuItems.forEach(item => {
+                        if (category === 'all' || item.getAttribute('data-category') === category) {
+                            item.style.display = 'flex';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                    
+                    // Smooth scroll to menu section
+                    document.querySelector('.menu-grid').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Initialize with all items showing
+            menuItems.forEach(item => {
+                item.style.display = 'flex';
+            });
+        });
+    </script>
+</body>
+</html>

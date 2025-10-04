@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservations | Savory Haven</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Booking Page CSS */
+        :root {
+            --primary: #e63946;
+            --secondary: #f1faee;
+            --dark: #1d3557;
+            --light: #a8dadc;
+            --accent: #457b9d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+        
+        header {
+            background-color: var(--dark);
+            color: var(--secondary);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .booking-hero {
+            height: 50vh;
+            background: linear-gradient(rgba(29, 53, 87, 0.7), rgba(29, 53, 87, 0.7)), url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding-top: 80px;
+        }
+        
+        .booking-hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .booking-container {
+            display: flex;
+            padding: 5rem 5%;
+            gap: 3rem;
+        }
+        
+        .booking-form-container {
+            flex: 1;
+            background-color: white;
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .booking-info {
+            flex: 1;
+        }
+        
+        .booking-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .info-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .info-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .info-card p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        
+        .info-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2);
+        }
+        
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: #c1121f;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .form-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--dark);
+            text-align: center;
+        }
+        
+        .form-note {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 2rem;
+            text-align: center;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: var(--secondary);
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-icons a {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .logo {
+                margin-bottom: 1rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+            
+            .booking-hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .booking-container {
+                flex-direction: column;
+                padding: 3rem 5%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="https://img.icons8.com/color/96/000000/restaurant.png" alt="Savory Haven Logo">
+            <h1>Swalias's Restaurant</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="booking.html">Reservations</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="booking-hero">
+        <h2>Reserve Your Table</h2>
+        <p>Experience exceptional dining with our personalized reservation service</p>
+    </section>
+    
+    <section class="booking-container">
+        <div class="booking-form-container">
+            <h3 class="form-title">Book a Table</h3>
+            <form id="reservationForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="date">Reservation Date</label>
+                    <input type="date" id="date" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="time">Reservation Time</label>
+                    <input type="time" id="time" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="guests">Number of Guests</label>
+                    <select id="guests" class="form-control" required>
+                        <option value="">Select number of guests</option>
+                        <option value="1">1 person</option>
+                        <option value="2">2 people</option>
+                        <option value="3">3 people</option>
+                        <option value="4">4 people</option>
+                        <option value="5">5 people</option>
+                        <option value="6">6 people</option>
+                        <option value="7">7 people</option>
+                        <option value="8">8+ people</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tables">Table Preference</label>
+                    <select id="tables" class="form-control">
+                        <option value="">No preference</option>
+                        <option value="window">Window table</option>
+                        <option value="patio">Patio seating</option>
+                        <option value="private">Private booth</option>
+                        <option value="chef">Chef's counter</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="special">Special Requests</label>
+                    <textarea id="special" class="form-control" rows="3"></textarea>
+                </div>
+                
+                <button type="submit" class="btn">Confirm Reservation</button>
+                
+                <p class="form-note">We'll send a confirmation to your email within 24 hours</p>
+            </form>
+        </div>
+        
+        <div class="booking-info">
+            <h3>Dining Information</h3>
+            
+            <div class="info-card">
+                <i class="fas fa-clock"></i>
+                <h4>Hours of Operation</h4>
+                <p><strong>Monday - Thursday:</strong> 10:00 AM - 11:00 PM</p>
+                <p><strong>Friday - Saturday:</strong> 11:00 AM - 11:00 PM</p>
+                <p><strong>Sunday:</strong> 09:00 AM - 10:00 PM</p>
+            </div>
+            
+            <div class="info-card">
+                <i class="fas fa-info-circle"></i>
+                <h4>Reservation Policy</h4>
+                <p>Reservations are held for 15 minutes past the booked time. For parties of 8 or more, please call us directly at (555) 123-4567.</p>
+                <p>Cancellations must be made at least 2 hours prior to your reservation time to avoid a $25 per person fee.</p>
+            </div>
+            
+            <div class="info-card">
+                <i class="fas fa-utensils"></i>
+                <h4>Special Dining Options</h4>
+                <p>We offer vegetarian, vegan, and gluten-free options. Please inform us of any dietary restrictions when making your reservation.</p>
+                <p>Private dining rooms are available for special events (up to 30 guests).</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+        
+        <p>123 Gourmet Street, Foodville | (555) 123-4567 | info@savoryhaven.com</p>
+    </footer>
+    
+    <script>
+        // Simple form handling
+        document.getElementById('reservationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your reservation request! We will contact you shortly to confirm.');
+            this.reset();
+        });
+        
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').min = today;
+    </script>
+</body>
+</html>
